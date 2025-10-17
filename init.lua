@@ -413,6 +413,7 @@ require('lazy').setup({
         -- defaults = {
         --   mappings = {
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+            i = { ['<c-h>'] = 'select_vertical' },
         --   },
         -- },
         -- pickers = {}
@@ -687,7 +688,7 @@ require('lazy').setup({
         -- ts_ls = {},
         --
 
-        lua_ls = {
+        -- lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
           -- capabilities = {},
@@ -700,7 +701,7 @@ require('lazy').setup({
               -- diagnostics = { disable = { 'missing-fields' } },
           --  },
           --},
-        },
+        -- },
       }
 
       -- Ensure the servers and tools above are installed
@@ -718,7 +719,6 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
