@@ -118,11 +118,28 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
+-- clipboard provider
+-- https://github.com/lotabout/dotfiles/blob/master/bin/clipboard-provider
+if vim.fn.executable('clipboard-provider') == 1 then
+  vim.g.clipboard = {
+    name = 'clipboard-provider',
+    copy = {
+      ['+'] = 'clipboard-provider copy',
+      ['*'] = 'clipboard-provider copy',
+    },
+    paste = {
+      ['+'] = 'clipboard-provider paste',
+      ['*'] = 'clipboard-provider paste',
+    },
+    cache_enabled = 0,
+  }
+end
+
 -- Enable break indent
 vim.o.breakindent = true
 
 -- Save undo history
-vim.o.undofile = true
+vim.o.undofile = false
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
