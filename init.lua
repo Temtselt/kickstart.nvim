@@ -266,7 +266,13 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   {
     'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-    config = function() require('guess-indent').setup {} end,
+    config = function() require('guess-indent').setup {
+      on_tab_options = {
+        ["tabstop"] = 4,
+        ["softtabstop"] = 4,
+        ["shiftwidth"] = 4,
+      }
+    } end,
   },
 
   -- NOTE: Plugins can also be added by using a table,
@@ -776,7 +782,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, lua = true}
+        local disable_filetypes = { c = true, cpp = true, lua = true, json = true}
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
