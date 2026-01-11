@@ -373,6 +373,7 @@ require('lazy').setup({
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>c', group = '[C]scope', mode = { 'n', 'v' } },
       },
     },
   },
@@ -938,6 +939,57 @@ require('lazy').setup({
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme 'PaperColor'
+    end,
+  },
+
+  {
+    "dhananjaylatkar/cscope_maps.nvim",
+    dependencies = {
+      "folke/which-key.nvim", -- optional [for whichkey hints]
+      "nvim-telescope/telescope.nvim", -- optional [for picker="telescope"]
+      "ibhagwan/fzf-lua", -- optional [for picker="fzf-lua"]
+      "nvim-tree/nvim-web-devicons", -- optional [for devicons in telescope or fzf]
+    },
+    opts = {
+      disable_maps = true, -- disable default keymaps
+      -- cscope related defaults
+      cscope = {
+        -- location of cscope db file
+        -- db_file = "./cscope.out",
+        db_file = "/Users/tate/Code/cscope/cscope.out",
+        -- cscope executable
+        exec = "cscope",
+        -- choose your picker
+        -- try "telescope", "fzf-lua" or "quickfix"
+        picker = "telescope",
+        -- "true" does not open picker for single result, just JUMP
+        skip_picker_for_single_result = false,
+        -- these args are directly passed to "cscope -f <db_file> <args>"
+        db_build_cmd = { script = "default", args = { "-b", "-q", "-v" } },
+        -- statusline indicator, default is nil
+        statusline_indicator = nil,
+        -- project_rooter config
+        project_rooter = {
+          enable = true, -- enable project rooter to automatically change cwd
+          change_cwd = true,
+        },
+      },
+    },
+    config = function(_, opts)
+      require("cscope_maps").setup(opts)
+      -- Custom keymaps for cscope
+      -- Using <leader>c as a prefix for cscope commands
+      local map = vim.keymap.set
+      map("n", "<leader>cs", "<cmd>Cscope find s<cr>", { desc = "[C]scope find [s]ymbol" })
+      map("n", "<leader>cg", "<cmd>Cscope find g<cr>", { desc = "[C]scope find [g]lobal definition" })
+      map("n", "<leader>cc", "<cmd>Cscope find c<cr>", { desc = "[C]scope find [c]alls calling this" })
+      map("n", "<leader>ct", "<cmd>Cscope find t<cr>", { desc = "[C]scope find [t]ext string" })
+      map("n", "<leader>ce", "<cmd>Cscope find e<cr>", { desc = "[C]scope find [e]grep pattern" })
+      map("n", "<leader>cf", "<cmd>Cscope find f<cr>", { desc = "[C]scope find [f]ile" })
+      map("n", "<leader>ci", "<cmd>Cscope find i<cr>", { desc = "[C]scope find [i]ncluding this file" })
+      map("n", "<leader>cd", "<cmd>Cscope find d<cr>", { desc = "[C]scope find [d]called by this" })
+      map("n", "<leader>ca", "<cmd>Cscope find a<cr>", { desc = "[C]scope find [a]ssignments" })
+      map("n", "<leader>cb", "<cmd>Cscope build<cr>", { desc = "[C]scope [b]uild database" })
     end,
   },
 
