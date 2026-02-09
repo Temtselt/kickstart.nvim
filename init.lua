@@ -91,7 +91,7 @@ vim.g.mapleader = ','
 vim.g.maplocalleader = ','
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -268,9 +268,9 @@ require('lazy').setup({
     'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
     config = function() require('guess-indent').setup {
       on_tab_options = {
-        ["tabstop"] = 4,
-        ["softtabstop"] = 4,
-        ["shiftwidth"] = 4,
+        ["tabstop"] = 8,
+        ["softtabstop"] = 8,
+        ["shiftwidth"] = 8,
       }
     } end,
   },
