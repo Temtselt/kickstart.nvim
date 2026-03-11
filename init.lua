@@ -434,12 +434,12 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+        defaults = {
+          mappings = {
+            i = { ['<c-enter>'] = 'to_fuzzy_refine' },
             i = { ['<c-h>'] = 'select_vertical' },
-        --   },
-        -- },
+          },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -992,6 +992,24 @@ require('lazy').setup({
       map("n", "<leader>cb", "<cmd>Cscope build<cr>", { desc = "[C]scope [b]uild database" })
     end,
   },
+  {
+      'stevearc/aerial.nvim',
+      opts = {
+        on_attach = function(bufnr)
+          vim.keymap.set(
+            'n',
+            '<leader>a',
+            '<cmd>AerialToggle! right<CR>',
+            { buffer = bufnr, desc = 'Toggle symbol outline' }
+          )
+        end,
+        layout = { default_direction = 'left' },
+      },
+      dependencies = {
+        'nvim-treesitter/nvim-treesitter',
+        'nvim-tree/nvim-web-devicons',
+      },
+    },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
@@ -1086,10 +1104,10 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
