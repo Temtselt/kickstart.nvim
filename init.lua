@@ -120,7 +120,7 @@ end)
 
 -- clipboard provider
 -- https://github.com/lotabout/dotfiles/blob/master/bin/clipboard-provider
-if vim.fn.executable('clipboard-provider') == 1 then
+if vim.fn.executable 'clipboard-provider' == 1 then
   vim.g.clipboard = {
     name = 'clipboard-provider',
     copy = {
@@ -266,13 +266,15 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   {
     'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-    config = function() require('guess-indent').setup {
-      on_tab_options = {
-        ["tabstop"] = 8,
-        ["softtabstop"] = 8,
-        ["shiftwidth"] = 8,
+    config = function()
+      require('guess-indent').setup {
+        on_tab_options = {
+          ['tabstop'] = 8,
+          ['softtabstop'] = 8,
+          ['shiftwidth'] = 8,
+        },
       }
-    } end,
+    end,
   },
 
   -- NOTE: Plugins can also be added by using a table,
@@ -713,18 +715,18 @@ require('lazy').setup({
         --
 
         -- lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
-          -- settings = {
-          --  Lua = {
-          --    completion = {
-          --      callSnippet = 'Replace',
-          --    },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-          --  },
-          --},
+        -- cmd = { ... },
+        -- filetypes = { ... },
+        -- capabilities = {},
+        -- settings = {
+        --  Lua = {
+        --    completion = {
+        --      callSnippet = 'Replace',
+        --    },
+        -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+        -- diagnostics = { disable = { 'missing-fields' } },
+        --  },
+        --},
         -- },
       }
 
@@ -742,8 +744,7 @@ require('lazy').setup({
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-      })
+      vim.list_extend(ensure_installed, {})
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
@@ -783,7 +784,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, lua = true, json = true}
+        local disable_filetypes = { c = true, cpp = true, lua = true, json = true }
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
@@ -796,9 +797,9 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        python = { "isort", "black" },
-        yaml = { "prettier" },
-        json = { "prettier" },
+        python = { 'isort', 'black' },
+        yaml = { 'prettier' },
+        json = { 'prettier' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -943,12 +944,12 @@ require('lazy').setup({
   },
 
   {
-    "dhananjaylatkar/cscope_maps.nvim",
+    'dhananjaylatkar/cscope_maps.nvim',
     dependencies = {
-      "folke/which-key.nvim", -- optional [for whichkey hints]
-      "nvim-telescope/telescope.nvim", -- optional [for picker="telescope"]
-      "ibhagwan/fzf-lua", -- optional [for picker="fzf-lua"]
-      "nvim-tree/nvim-web-devicons", -- optional [for devicons in telescope or fzf]
+      'folke/which-key.nvim', -- optional [for whichkey hints]
+      'nvim-telescope/telescope.nvim', -- optional [for picker="telescope"]
+      'ibhagwan/fzf-lua', -- optional [for picker="fzf-lua"]
+      'nvim-tree/nvim-web-devicons', -- optional [for devicons in telescope or fzf]
     },
     opts = {
       disable_maps = true, -- disable default keymaps
@@ -956,16 +957,16 @@ require('lazy').setup({
       cscope = {
         -- location of cscope db file
         -- db_file = "./cscope.out",
-        db_file = "/Users/tate/Code/cscope/cscope.out",
+        db_file = '/Users/tate/Code/cscope/cscope.out',
         -- cscope executable
-        exec = "cscope",
+        exec = 'cscope',
         -- choose your picker
         -- try "telescope", "fzf-lua" or "quickfix"
-        picker = "telescope",
+        picker = 'telescope',
         -- "true" does not open picker for single result, just JUMP
         skip_picker_for_single_result = false,
         -- these args are directly passed to "cscope -f <db_file> <args>"
-        db_build_cmd = { script = "default", args = { "-b", "-q", "-v" } },
+        db_build_cmd = { script = 'default', args = { '-b', '-q', '-v' } },
         -- statusline indicator, default is nil
         statusline_indicator = nil,
         -- project_rooter config
@@ -976,40 +977,35 @@ require('lazy').setup({
       },
     },
     config = function(_, opts)
-      require("cscope_maps").setup(opts)
+      require('cscope_maps').setup(opts)
       -- Custom keymaps for cscope
       -- Using <leader>c as a prefix for cscope commands
       local map = vim.keymap.set
-      map("n", "<leader>cs", "<cmd>Cscope find s<cr>", { desc = "[C]scope find [s]ymbol" })
-      map("n", "<leader>cg", "<cmd>Cscope find g<cr>", { desc = "[C]scope find [g]lobal definition" })
-      map("n", "<leader>cc", "<cmd>Cscope find c<cr>", { desc = "[C]scope find [c]alls calling this" })
-      map("n", "<leader>ct", "<cmd>Cscope find t<cr>", { desc = "[C]scope find [t]ext string" })
-      map("n", "<leader>ce", "<cmd>Cscope find e<cr>", { desc = "[C]scope find [e]grep pattern" })
-      map("n", "<leader>cf", "<cmd>Cscope find f<cr>", { desc = "[C]scope find [f]ile" })
-      map("n", "<leader>ci", "<cmd>Cscope find i<cr>", { desc = "[C]scope find [i]ncluding this file" })
-      map("n", "<leader>cd", "<cmd>Cscope find d<cr>", { desc = "[C]scope find [d]called by this" })
-      map("n", "<leader>ca", "<cmd>Cscope find a<cr>", { desc = "[C]scope find [a]ssignments" })
-      map("n", "<leader>cb", "<cmd>Cscope build<cr>", { desc = "[C]scope [b]uild database" })
+      map('n', '<leader>cs', '<cmd>Cscope find s<cr>', { desc = '[C]scope find [s]ymbol' })
+      map('n', '<leader>cg', '<cmd>Cscope find g<cr>', { desc = '[C]scope find [g]lobal definition' })
+      map('n', '<leader>cc', '<cmd>Cscope find c<cr>', { desc = '[C]scope find [c]alls calling this' })
+      map('n', '<leader>ct', '<cmd>Cscope find t<cr>', { desc = '[C]scope find [t]ext string' })
+      map('n', '<leader>ce', '<cmd>Cscope find e<cr>', { desc = '[C]scope find [e]grep pattern' })
+      map('n', '<leader>cf', '<cmd>Cscope find f<cr>', { desc = '[C]scope find [f]ile' })
+      map('n', '<leader>ci', '<cmd>Cscope find i<cr>', { desc = '[C]scope find [i]ncluding this file' })
+      map('n', '<leader>cd', '<cmd>Cscope find d<cr>', { desc = '[C]scope find [d]called by this' })
+      map('n', '<leader>ca', '<cmd>Cscope find a<cr>', { desc = '[C]scope find [a]ssignments' })
+      map('n', '<leader>cb', '<cmd>Cscope build<cr>', { desc = '[C]scope [b]uild database' })
     end,
   },
   {
-      'stevearc/aerial.nvim',
-      opts = {
-        on_attach = function(bufnr)
-          vim.keymap.set(
-            'n',
-            '<leader>a',
-            '<cmd>AerialToggle! right<CR>',
-            { buffer = bufnr, desc = 'Toggle symbol outline' }
-          )
-        end,
-        layout = { default_direction = 'left' },
-      },
-      dependencies = {
-        'nvim-treesitter/nvim-treesitter',
-        'nvim-tree/nvim-web-devicons',
-      },
+    'stevearc/aerial.nvim',
+    opts = {
+      on_attach = function(bufnr)
+        vim.keymap.set('n', '<leader>a', '<cmd>AerialToggle! right<CR>', { buffer = bufnr, desc = 'Toggle symbol outline' })
+      end,
+      layout = { default_direction = 'left' },
     },
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-tree/nvim-web-devicons',
+    },
+  },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
