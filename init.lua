@@ -787,7 +787,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, lua = true, json = true }
+        local disable_filetypes = { c = true, cpp = true, lua = true, json = true, yaml = true }
         if disable_filetypes[vim.bo[bufnr].filetype] then
           return nil
         else
@@ -927,7 +927,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      -- vim.cmd.colorscheme 'tokyonight'
+      vim.cmd.colorscheme 'darkblue'
     end,
   },
 
